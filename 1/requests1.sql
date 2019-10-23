@@ -1,28 +1,28 @@
 -- таблица поставщиков
 CREATE TABLE s (
     n_post character(6) NOT NULL,
-    surname character(20),
+    name character(20),
     reiting integer,
     town character(20)
-) WITH OIDS;
+);
 
 
 -- таблица деталей
 CREATE TABLE p (
     n_det character(6) NOT NULL,
-    name_p character(20),
+    name character(20),
     cvet character(20),
     ves integer,
     town character(20)
-) WITH OIDS;
+);
 
 
 -- таблица изделий
 CREATE TABLE j (
     n_izd character(6) NOT NULL,
-    name_j character(20),
+    name character(20),
     town character(20)
-) WITH OIDS;
+);
 
 
 -- таблица поставок
@@ -31,7 +31,7 @@ CREATE TABLE spj (
     n_det character(6) NOT NULL,
     n_izd character(6) NOT NULL,
     kol integer
-) WITH OIDS;
+);
 
 
 
