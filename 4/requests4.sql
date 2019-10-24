@@ -26,23 +26,6 @@ select *
 from p;
 
 
-select p.n_det, p.ves, p.cvet,
-        case when p.ves = (select max(ves) from p p5)
-            then (select p3.cvet cvet1
-            from p p3
-            order by p3.ves, p3.cvet
-            limit 1)
-        else (select p4.cvet cvet2
-            from p p4
-            order by p4.ves DESC, p4.cvet
-            limit 1)
-        end new_cvet
-from p
-where p.ves = (select min(ves) from p p1)
-or p.ves = (select max(ves) from p p2);
-
-
-
 update p set cvet = (
         case when p.ves = (select max(ves) from p p5)
             then (select p3.cvet cvet1
@@ -127,9 +110,9 @@ where n_det in(
         where n_post in (
             select n_post
             from s
-            order by
-                reiting DESC
-            limit 1
+            where reiting = (
+                select max(reiting) 
+                from s)
         )
         order by 1
     )
@@ -141,9 +124,9 @@ where n_det in(
         where n_post not in (
             select n_post
             from s
-            order by
-                reiting DESC
-            limit 1
+            where reiting = (
+                select max(reiting) 
+                from s)
         )
         order by 1
     )

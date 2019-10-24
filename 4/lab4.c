@@ -34,12 +34,6 @@ int problem1()
         exec sql rollback work; // отмена транзакции
         return -1;
     }
-    else if (sqlca.sqlcode == 100)
-    {
-        printf("Данных нет.\n");
-        exec sql commit work; // конец транзакции
-        return 0;
-    }
     else if (sqlca.sqlcode == 0)
     {
         printf("%d\n", details_count);
@@ -60,6 +54,8 @@ char *my_copy(char *str)
     }
     return new_str;
 }
+
+
 
 // 2. Поменять местами цвета самой тяжелой и самой легкой детали, т. е. деталям
 // с наибольшим весом установить цвет детали с минимальным весом, а деталям с
@@ -91,40 +87,21 @@ int problem2()
     or p.ves = (select max(ves) from p p2);
     /////////////////////////////////////////////////////////////////////////SQL
 
-    exec sql declare my_cursor2 cursor for
-    select cvet
-    from p
-    where n_det = 'P6';
-
-    exec sql open my_cursor2;
-    exec sql fetch from my_cursor2 into :cvet; 
     // P6 не должно быть красным
     if (sqlca.sqlcode < 0)
     {
+        char errmsg[400];
         printf("Возникла ошибка. sqlca.sqlcode = %d\n", sqlca.sqlcode);
+        rgetmsg(sqlca.sqlerrd[1], errmsg, sizeof(errmsg));
+        printf("Сообщение ISAM: %s\n", errmsg);
         exec sql rollback work; // отмена транзакции
         return -1;
     }
-    else if (sqlca.sqlcode == 100)
-    {
-        printf("Данных нет.\n");
-        exec sql commit work; // конец транзакции
-        return 0;
-    }
     else if (sqlca.sqlcode == 0)
     {
-        if (!strcmp(my_copy(cvet), "Красный"))
-        {
-            printf("Замена выполнена успешно.\n");
-            exec sql commit work;
-            return 0;
-        }
-        else
-        {
-            printf("Возникла ошибка.\nP6 должна была изменить цвет.\n");
-            exec sql rollback work;
-            return -1;
-        }
+        printf("Замена выполнена успешно.\n");
+        printf("Заменено %d строк\n", sqlca.sqlerrd[2]);
+        exec sql commit work;
     }
 }
 
@@ -163,7 +140,8 @@ int problem3()
     /////////////////////////////////////////////////////////////////////////SQL
 
     exec sql open my_cursor3;
-
+    exec sql fetch from my_cursor3 into :n_post, :ves, :quater_of_weight;
+    
     if (sqlca.sqlcode < 0)
     {
         printf("Возникла ошибка. sqlca.sqlcode = %d\n", sqlca.sqlcode);
@@ -277,7 +255,7 @@ int problem5()
     -- полная информация о деталях от поставщиков только с максимальным рейтингом
     select *
     from p
-    where n_det in (
+    where n_det in(
         -- детали от поставщиков только с максимальным рейтингом
         (
             -- детали от поставщиков с максимальным рейтингом
@@ -286,9 +264,9 @@ int problem5()
             where n_post in (
                 select n_post
                 from s
-                order by
-                    reiting DESC
-                limit 1
+                where reiting = (
+                    select max(reiting) 
+                    from s)
             )
             order by 1
         )
@@ -300,9 +278,9 @@ int problem5()
             where n_post not in (
                 select n_post
                 from s
-                order by
-                    reiting DESC
-                limit 1
+                where reiting = (
+                    select max(reiting) 
+                    from s)
             )
             order by 1
         )
