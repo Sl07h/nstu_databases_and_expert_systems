@@ -174,67 +174,6 @@ namespace bd_8
                 // Выполняем SQL-команду и получаем количество обработанных записей
                 OdbcDataReader res = cmd.ExecuteReader();
 
-                /*DataTable result_table = new DataTable();
-
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Номер поставки";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Номер поставщика";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Номер детали";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Номер изделия";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Количество";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Дата поставки";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                using (DataColumn fNameColumn = new DataColumn())
-                {
-                    fNameColumn.DataType = System.Type.GetType("System.String");
-                    fNameColumn.ColumnName = "Цена";
-                    result_table.Columns.Add(fNameColumn);
-                }
-                while (res.Read())
-                {
-                    DataRow new_row;
-                    new_row = result_table.NewRow();
-                    new_row["Номер поставки"] = res[0];
-                    new_row["Номер поставщика"] = res[1];
-                    new_row["Номер детали"] = res[2];
-                    new_row["Номер изделия"] = res[3];
-                    new_row["Количество"] = res[4];
-                    new_row["Дата поставки"] = res[5];
-                    new_row["Цена"] = res[6];
-
-                    result_table.Rows.Add(new_row);
-                }
-                // Подтверждаем транзакцию  
-                GridView2.DataSource = result_table;
-                GridView2.DataBind();*/
                 tx.Commit();
             }
             catch (Exception ex)
