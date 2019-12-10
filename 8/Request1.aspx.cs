@@ -52,8 +52,6 @@ namespace bd_8
             par1.Value = DropDownList1.SelectedValue;
             //Добавляем первый параметр в коллекцию
             cmd.Parameters.Add(new OdbcParameter("@vn_izd", DropDownList1.SelectedValue));
-            cmd.Parameters.Add(new OdbcParameter("@vn_izd", DropDownList1.SelectedValue));
-            cmd.Parameters.Add(new OdbcParameter("@vn_izd", DropDownList1.SelectedValue));
             // Объявляем объект транзакции
             OdbcTransaction tx = null;
             try
