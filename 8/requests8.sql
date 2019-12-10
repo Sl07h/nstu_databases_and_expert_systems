@@ -9,16 +9,25 @@
 
 -- Получить информацию о выручке поставщиков, сделавших больше всего поставок
 -- для указанного изделия
-select n_post, sum(t2.kol*t2.cost) as revenue
-from pmib6306.spj1 t2
-where t2.n_post = ( -- максимальное число поставленных деталей
-                    select t1.n_post
-                    from pmib6306.spj1 t1
-                    where t1.n_izd = ?
-                    group by t1.n_post
-                    order by sum(t1.kol) desc
-                    limit 1 )
-group by t2.n_post
+select distinct n_post,  sum(kol*cost) as revenue
+from pmib6306.spj1
+where n_post in (
+    select n_post
+    from pmib6306.spj1
+    where n_izd = ?
+    group by 1
+    having count(kol) = (
+        -- максимальное число поставленных деталей
+        select count(kol) as deliveries
+        from pmib6306.spj1
+        where n_izd = ?
+        group by n_post
+        order by count(kol) desc
+        limit 1
+    )
+)
+group by n_post
+order by 1;
 
 
 

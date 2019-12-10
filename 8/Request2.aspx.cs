@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
 using System.Data.Odbc;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Windows.Forms;
 
 
 namespace bd_8
@@ -20,6 +14,7 @@ namespace bd_8
 
         protected void Request_2()
         {
+            //Label2.Text = "";
             // Создаем объект подключения
             OdbcConnection conn = new OdbcConnection();
             // Задаем параметр подключения – имя ODBC-источника
@@ -173,7 +168,6 @@ namespace bd_8
                 cmd.Transaction = tx;
                 // Выполняем SQL-команду и получаем количество обработанных записей
                 OdbcDataReader res = cmd.ExecuteReader();
-
                 tx.Commit();
             }
             catch (Exception ex)
@@ -242,61 +236,7 @@ namespace bd_8
             //закрываем соединение
             conn.Close();
         }
-
-        protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Создаем объект подключения
-            OdbcConnection conn = new OdbcConnection();
-            // Задаем параметр подключения – имя ODBC-источника
-            conn.ConnectionString = "Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;port=5432;uid=pmi-b6306;pwd=Jemlift5;sslmode=disable;readonly=0;protocol=7.4;fakeoidindex=0;showoidcolumn=0;rowversioning=0;showsystemtables=0;fetch=100;unknownsizes=0;maxvarcharsize=255;maxlongvarcharsize=8190;debug=0;commlog=0;usedeclarefetch=0;textaslongvarchar=1;unknownsaslongvarchar=0;boolsaschar=1;parse=0;lfconversion=1;updatablecursors=1;trueisminus1=0;bi=0;byteaaslongvarbinary=1;useserversideprepare=1;lowercaseidentifier=0;d6=-101;xaopt=1";
-            // Подключаемся к БД
-            conn.Open();
-
-            // Определяем строку с текстом запроса
-            //string strSQL = "UPDATE pmib6306.p SET name = ?  where  n_det = ? ";
-            string strSQL = "select * from pmib6306.spj1";
-            // Создаем объект запроса
-            OdbcCommand cmd = new OdbcCommand(strSQL, conn);
-            // Создаем первый параметр
-            OdbcParameter par_name = new OdbcParameter();
-            par_name.ParameterName = "@vname";
-            par_name.OdbcType = OdbcType.Text;
-            par_name.Value = "Кулер";
-            // Добавляем первый параметр в коллекцию
-            // cmd.Parameters.Add(par_name);
-            // Создаем второй параметр
-            OdbcParameter par_town = new OdbcParameter();
-            par_town.ParameterName = "@vn_det";
-            par_town.OdbcType = OdbcType.Text;
-            par_town.Value = "P3";
-            // Добавляем второй параметр в коллекцию.
-            //  cmd.Parameters.Add(par_town);
-            // Объявляем объект транзакции
-            OdbcTransaction tx = null;
-            try
-            {
-                // Начинаем транзакцию и извлекаем объект транзакции из объекта подключения.
-                tx = conn.BeginTransaction();
-                // Включаем объект SQL-команды в транзакцию
-                cmd.Transaction = tx;
-                // Выполняем SQL-команду и получаем количество обработанных записей
-                int i = cmd.ExecuteNonQuery();
-                // Подтверждаем транзакцию  
-                tx.Commit();
-            }
-            catch (Exception ex)
-            {
-                // При возникновении любой ошибки 
-                // Формируем сообщение об ошибке 
-                Label2.Text = ex.Message;
-                // выполняем откат транзакции 
-                tx.Rollback();
-            }
-
-            //закрываем соединение
-            conn.Close();
-        }
-
+        
         protected void FillDropDownList2()
         {
             // Создаем объект подключения
@@ -317,7 +257,7 @@ namespace bd_8
                 cmd.Transaction = tx;
                 // Выполняем SQL-команду и получаем количество обработанных записей
                 OdbcDataReader res = cmd.ExecuteReader();
-                
+
                 while (res.Read())
                     DropDownList2.Items.Add(res[0].ToString());
 

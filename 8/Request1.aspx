@@ -13,8 +13,7 @@
         <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
             <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True"></asp:DropDownList>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Показать" />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="True" Width="544px" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
-        </asp:GridView>
+        <asp:GridView ID="GridView1" runat="server" Width="544px"> </asp:GridView>
         </div>
     </form>
 </body>

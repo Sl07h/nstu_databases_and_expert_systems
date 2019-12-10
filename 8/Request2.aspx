@@ -10,7 +10,6 @@
 <body>
     <form id="form1" runat="server">
         <div>
-        <asp:Label ID="Label2" runat="server" Text="Label" Visible="False"></asp:Label>
         <asp:TextBox ID="TextBox1" runat="server" Text="2011-01-11" Width="150px"></asp:TextBox>
         <asp:DropDownList ID="DropDownList2" runat="server" Width="102px">
         </asp:DropDownList>
@@ -19,8 +18,9 @@
             <br />
             <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Увеличить количество в 2 раза" Width="260px" />
             <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Уменьшить количество в 2 раза" Width="260px" />
-        <asp:GridView ID="GridView2" runat="server" Width="539px">
-        </asp:GridView>
+        <asp:GridView ID="GridView2" runat="server" Width="539px"></asp:GridView>
+            <br />
+        <asp:Label ID="Label2" runat="server"></asp:Label>
         </div>
     </form>
 </body>
